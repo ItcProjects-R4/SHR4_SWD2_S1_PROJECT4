@@ -2,10 +2,10 @@ import { useEffect, useRef } from "react";
 import { ACCENT } from "../utils/constants";
 
 const TYPE_STYLES = {
-  cmd:     { prefix: "> ", color: ACCENT },
-  success: { prefix: "",   color: ACCENT },
-  error:   { prefix: "",   color: "#ff4488" },
-  info:    { prefix: "",   color: "#555" },
+  cmd: { prefix: "> ", color: ACCENT },
+  success: { prefix: "", color: ACCENT },
+  error: { prefix: "", color: "#ff4488" },
+  info: { prefix: "", color: "#555" },
 };
 
 export default function Terminal({ logs = [] }) {
@@ -17,7 +17,7 @@ export default function Terminal({ logs = [] }) {
 
   return (
     <div
-      className="rounded-md px-3 py-2 overflow-y-auto text-[0.72rem] leading-relaxed"
+      className="rounded-md px-4 py-5 overflow-y-auto text-[0.72rem] leading-relaxed"
       style={{
         background: "#0a0a0a",
         border: "1px solid #1a1a1a",
