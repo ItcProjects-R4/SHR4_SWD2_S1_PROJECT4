@@ -1,10 +1,27 @@
 import { useState } from "react";
 import Header from "./components/Header";
+import SearchBar from "./components/SearchBar";
 
 const TABS = ["overview", "repos", "languages"];
 
 export default function App() {
   const [compareMode, setCompareMode] = useState(false);
+
+  const [loading, setLoading] = useState({
+    0: false,
+    1: false,
+  });
+
+  const handleFetch = async (idx, userName) => {
+    console.log("idx", idx);
+    console.log("UserName", userName);
+
+    setLoading((prev) => ({ ...prev, [idx]: true }));
+
+    await new Promise((res) => setTimeout(res, 2000));
+
+    setLoading((prev) => ({ ...prev, [idx]: false }));
+  };
 
   return (
     <div
@@ -25,6 +42,12 @@ export default function App() {
       <Header
         compareMode={compareMode}
         onToggleCompare={() => setCompareMode((m) => !m)}
+      />
+
+      <SearchBar
+        onFetch={handleFetch}
+        compareMode={compareMode}
+        loading={loading}
       />
 
       <main style={{ padding: "24px 32px" }}></main>
