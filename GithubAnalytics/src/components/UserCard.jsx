@@ -1,5 +1,6 @@
 import { ACCENT } from "../utils/constants";
 
+
 export default function UserCard({ user, stats, color = ACCENT }) {
   if (!user) return null;
 
@@ -68,6 +69,7 @@ export default function UserCard({ user, stats, color = ACCENT }) {
           <span className="text-2xl font-bold" style={{ color }}>{stats?.langs?.length || 0}</span>
         </div>
       </div>
+
     </div>
   );
 }

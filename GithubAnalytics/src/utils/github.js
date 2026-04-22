@@ -16,7 +16,8 @@ export async function fetchGithubUser(username) {
     };
   } catch (error) {
     if (error.response?.status === 404) throw new Error("User not found");
-    throw new Error("Failed to fetch data");
+    if (error.response?.status === 403) throw new Error("API Rate limit exceeded. Try again later.");
+    throw new Error(error.response?.data?.message || "Failed to fetch data from GitHub");
   }
 }
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Header from "./components/Header";
+// import OverviewTab from "./components/tabs/OverviewTab";
 // import UserCard from "./components/UserCard";
 // import { fetchGithubUser, analyzeRepos } from "./utils/github";
 // import { ACCENT } from "./utils/constants";
@@ -53,9 +54,11 @@ export default function App() {
         compareMode={compareMode}
         onToggleCompare={() => setCompareMode((m) => !m)}
       />
-      <main style={{ padding: "24px 32px" }}></main>
-      {/* 
-            
+      <main style={{ padding: "24px 32px" }}>
+
+      </main>
+      
+{/*             
         <div className="flex items-center w-full max-w-2xl border border-[#1a1a1a] rounded-md overflow-hidden bg-[#050505] mb-8">
           <div className="px-4 py-3 text-xs font-bold border-r border-[#1a1a1a] bg-[#0a0a0a]" style={{ color: ACCENT }}>
             USER_1 $
@@ -82,9 +85,10 @@ export default function App() {
         )}
 
         {userData && (
-          <UserCard user={userData} stats={statsData} color={ACCENT} />
+          <OverviewTab data={[{ user: userData, ...statsData }]} />
         )}
       </main> */}
     </div>
   );
 }
+
