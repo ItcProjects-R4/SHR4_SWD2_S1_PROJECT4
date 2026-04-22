@@ -22,13 +22,7 @@ function SearchBar({ onFetch, compareMode, loading }) {
 
   return (
     <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: compareMode ? "1fr 1fr" : "1fr",
-        gap: "16px",
-        marginBottom: "20px",
-        padding: "20px",
-      }}
+      className={`grid gap-4 mb-5 p-5 gird-col-1 ${compareMode ? "md:grid-cols-2" : ""}`}
     >
       {rows.map((idx) => {
         const color = idx === 0 ? ACCENT : ACCENT2;
@@ -36,19 +30,12 @@ function SearchBar({ onFetch, compareMode, loading }) {
         const setValue = idx === 0 ? setUser1 : setUser2;
 
         return (
-          <div key={idx} style={{ display: "flex" }}>
+          <div key={idx} className="flex">
             <div
-              style={{
-                padding: "10px 14px",
-                background: "#080808",
-                border: `1px solid ${color}25`,
-                borderRight: "none",
-                borderRadius: "4px 0 0 4px",
-                display: "flex",
-                alignItems: "center",
-              }}
+              className="px-3 py-2 bg-black border border-opacity-20 boder-r-0 rounded-l flex items-center"
+              style={{ borderColor: `${color}40` }}
             >
-              <span style={{ color, fontSize: "12px", fontWeight: "bold" }}>
+              <span className="text-xs font-bold" style={{ color }}>
                 {idx === 0 ? "USER_1 $" : "USER_2 $"}
               </span>
             </div>
@@ -59,33 +46,23 @@ function SearchBar({ onFetch, compareMode, loading }) {
               value={value}
               onChange={(e) => setValue(e.target.value)}
               onKeyDown={(e) => handleKeyDown(e, idx)}
-              style={{
-                flex: 1,
-                background: "#080808",
-                border: `1px solid ${color}25`,
-                borderRight: "none",
-                padding: "10px 16px",
-                color: "#e0e0e0",
-                fontFamily: "'Share Tech Mono', monospace",
-                fontSize: "13px",
-                outline: "none",
-              }}
+              className="flex-1 bg-black border border-r-0 px-4 py-2 text-gray-200 text-sm outline-none font-mono"
+              style={{ borderColor: `${color}40` }}
             />
             <button
               onClick={() => handleClick(idx)}
               disabled={loading[idx]}
               style={{
-                padding: "10px 20px",
                 background: loading[idx] ? "#111" : `${color}15`,
                 border: `1px solid ${color}${loading[idx] ? "20" : "60"}`,
-                borderRadius: "0 4px 4px 0",
                 color: loading[idx] ? "#333" : color,
-                cursor: loading[idx] ? "not-allowed" : "pointer",
-                fontFamily: "'Share Tech Mono', monospace",
-                fontSize: "12px",
-                letterSpacing: "2px",
-                transition: "0.2s",
               }}
+              className={`px-5 py-2 rounded-r font-mono text-xs tracking-widest transition
+                ${
+                  loading[idx]
+                    ? "bg-black cursor-not-allowed text-gray-600"
+                    : "hover:opacity-80"
+                }`}
             >
               {loading[idx] ? "LOADING" : " ANALYZE"}
             </button>
