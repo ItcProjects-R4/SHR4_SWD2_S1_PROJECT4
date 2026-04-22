@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
-import { COLORS, ACCENT, ACCENT2 } from '../utils/constants'; // ضفنا ACCENT2 هنا
+import { COLORS, ACCENT, ACCENT2 } from '../utils/constants'; 
 import { SectionTitle, CustomTooltip, GlowText } from './UI';
 
 export default function GithubAnalyticsTabs({ data = [], currentTab, onTabChange }) {
