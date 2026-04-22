@@ -1,14 +1,23 @@
+import axios from "axios";
+
+const github = axios.create({
+  baseURL: "https://api.github.com",
+});
+
 export async function fetchGithubUser(username) {
-  const [userRes, reposRes] = await Promise.all([
-    fetch(`https://api.github.com/users/${username}`),
-    fetch(
-      `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`,
-    ),
-  ]);
-  if (!userRes.ok) throw new Error("User not found");
-  const user = await userRes.json();
-  const repos = await reposRes.json();
-  return { user, repos };
+  try {
+    const [userRes, reposRes] = await Promise.all([
+      github.get(`/users/${username}`),
+      github.get(`/users/${username}/repos?per_page=100&sort=updated`),
+    ]);
+    return {
+      user: userRes.data,
+      repos: reposRes.data,
+    };
+  } catch (error) {
+    if (error.response?.status === 404) throw new Error("User not found");
+    throw new Error("Failed to fetch data");
+  }
 }
 
 export function analyzeRepos(repos) {
