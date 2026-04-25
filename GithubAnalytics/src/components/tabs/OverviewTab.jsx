@@ -18,7 +18,7 @@ export default function OverviewTab({ data = [] }) {
         data.length === 2 ? "lg:grid-cols-2" : ""
       } gap-8`}
     >
-      {data.map((d, i) => {
+      {data.filter(Boolean).map((d, i) => {
         const color = i === 0 ? ACCENT : ACCENT2;
         return (
           <div key={d.user.login} className="flex flex-col">
