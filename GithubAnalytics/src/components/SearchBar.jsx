@@ -60,11 +60,11 @@ function SearchBar({ onFetch, compareMode, loading }) {
               className={`px-5 py-2 rounded-r font-mono text-xs tracking-widest transition
                 ${
                   loading[idx]
-                    ? "bg-black cursor-not-allowed text-gray-600"
+                    ? "bg-black cursor-wait text-gray-600"
                     : "hover:opacity-80"
                 }`}
             >
-              {loading[idx] ? "LOADING" : " ANALYZE"}
+              {loading[idx] ? "LOADING" : "ANALYZE"}
             </button>
           </div>
         );
