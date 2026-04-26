@@ -1,35 +1,21 @@
 import { useState } from "react";
 import Header from "./components/Header";
 import SearchBar from "./components/SearchBar";
+import TabNav from "./components/TabNav";
+import CompareTab from "./components/tabs/CompareTab";
+import LanguagesTab from "./components/tabs/LanguagesTab";
+import OverviewTab from "./components/tabs/OverviewTab";
+import ReposTab from "./components/tabs/ReposTab";
+import { useGithub } from "./hooks/useGithub";
 import { ACCENT, ACCENT2 } from "./utils/constants";
+import Terminal from "./components/Terminal";
+
+// const TABS = ["overview", "repos", "languages"];
 
 export default function App() {
+  const { userData, loading, logs, fetchUser } = useGithub();
+
   const [compareMode, setCompareMode] = useState(false);
-
-  const [users, setUsers] = useState({
-    0: null,
-    1: null,
-  });
-
-  const [loading, setLoading] = useState({
-    0: false,
-    1: false,
-  });
-
-  const handleFetch = async (idx, userName) => {
-    const FakeUserName = { name: userName };
-
-    setLoading((prev) => ({ ...prev, [idx]: true }));
-
-    await new Promise((res) => setTimeout(res, 2000));
-
-    setUsers((prev) => ({
-      ...prev,
-      [idx]: FakeUserName,
-    }));
-
-    setLoading((prev) => ({ ...prev, [idx]: false }));
-  };
 
   const [activeTab, setActiveTab] = useState("overview");
 
@@ -37,7 +23,7 @@ export default function App() {
     "overview",
     "repos",
     "languages",
-    ...(users[0] && users[1] ? ["compare"] : []),
+    ...(userData[0] && userData[1] ? ["compare"] : []),
   ];
 
   return (
@@ -62,17 +48,18 @@ export default function App() {
       />
 
       <SearchBar
-        onFetch={handleFetch}
+        onFetch={fetchUser}
         compareMode={compareMode}
         loading={loading}
       />
+      <Terminal logs={logs} />
 
       <div className="flex border-b border-[#111] mt-7 mb-6 overflow-x-auto">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 sm:px-6 py-2 text-[10px] sm:text-[11px] tracking-[1px] sm:tracking-[2px] uppercase font-mono whitespace-nowrap transition-all duration-200 border-b-2 -mb-[1px]`}
+            className="px-4 sm:px-6 py-2 text-[10px] sm:text-[11px] tracking-[1px] sm:tracking-[2px] uppercase font-mono whitespace-nowrap transition-all duration-200 border-b-2 -mb-[1px]"
             style={{
               color: tab === activeTab ? ACCENT : "#333",
               borderBottom:
@@ -87,13 +74,17 @@ export default function App() {
       </div>
 
       <main style={{ padding: "24px 32px" }}>
-        {!users[0] && !users[1] ? (
+        {!userData[0] && !userData[1] ? (
           <div className="text-center mt-12 sm:mt-16 text-gray-500 px-4">
             <h3 className="text-lg mb-2">No data yet</h3>
-            <p>Search for a GitHub user to begin</p>
           </div>
         ) : (
-          <div></div>
+          <>
+            {activeTab === "overview" && <OverviewTab data={userData} />}
+            {activeTab === "repos" && <ReposTab data={userData} />}
+            {activeTab === "languages" && <LanguagesTab data={userData} />}
+            {activeTab === "compare" && <CompareTab data={userData} />}
+          </>
         )}
       </main>
     </div>
