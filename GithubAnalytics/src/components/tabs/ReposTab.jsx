@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ACCENT, ACCENT2 } from '../../utils/constants';
+import { useState } from "react";
+import { ACCENT, ACCENT2 } from "../../utils/constants";
 import { SectionTitle, CustomTooltip, GlowText } from "./../UI";
 
 export default function ReposTab({ data = [] }) {
@@ -7,14 +7,20 @@ export default function ReposTab({ data = [] }) {
   const activeData = Array.isArray(data) ? data.filter(Boolean) : [];
 
   if (activeData.length === 0) {
-    return <div className="text-zinc-800 font-mono text-center py-20 tracking-tighter">INITIALIZING DATA STREAM...</div>;
+    return (
+      <div className="text-zinc-800 font-mono text-center py-20 tracking-tighter">
+        INITIALIZING DATA STREAM...
+      </div>
+    );
   }
 
   return (
     <div className="font-mono w-full">
       <div className="mx-1 md:mx-4 mb-10">
         <div className="relative group max-w-sm">
-          <div className="absolute -left-2 top-1/2 -translate-y-1/2 text-zinc-700 text-[10px] animate-pulse">&gt;</div>
+          <div className="absolute -left-2 top-1/2 -translate-y-1/2 text-zinc-700 text-[10px] animate-pulse">
+            &gt;
+          </div>
           <input
             type="text"
             placeholder="FILTER_REPOSITORIES..."
@@ -25,51 +31,68 @@ export default function ReposTab({ data = [] }) {
         </div>
       </div>
 
-      <div className={`grid gap-12 ${activeData.length > 1 ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
+      <div
+        className={`grid gap-6 ${activeData.length > 1 ? "grid-cols-1 lg:grid-cols-2" : "grid-cols-1"}`}
+      >
         {activeData.map((d, i) => {
           const userColor = i === 0 ? ACCENT : ACCENT2;
-          const filteredRepos = d.repos?.filter(repo =>
-            repo.name.toLowerCase().includes(searchTerm.toLowerCase())
+          const filteredRepos = d.repos?.filter((repo) =>
+            repo.name.toLowerCase().includes(searchTerm.toLowerCase()),
           );
 
           return (
             <div key={i} className="w-full">
-              <div className="ml-1 md:ml-4 mb-6">
-                <SectionTitle color={userColor}>
-                  {d.user?.login} — REPOSITORIES
-                </SectionTitle>
+              <div className="mb-4">
+                <SectionTitle>{d.user?.login} — REPOSITORIES</SectionTitle>
               </div>
 
-              <div className="border border-zinc-900 rounded bg-black/20 overflow-hidden mx-1 md:mx-4">
-                <div className="grid grid-cols-[1.2fr_70px_60px_1fr] md:grid-cols-[1fr_100px_100px_140px] px-4 py-4 bg-zinc-950/50 text-[9px] md:text-[11px] text-zinc-600 tracking-[0.15em] uppercase border-b border-zinc-900 font-bold">
-                  <span>Name</span>
-                  <span className="text-center">Stars</span>
-                  <span className="text-center">Forks</span>
-                  <span className="text-right">Language</span>
+              <div className="border border-[#0d0d0d] rounded overflow-hidden">
+                <div className="grid grid-cols-[1fr_80px_80px_80px] px-4 py-2 bg-[#080808] text-[10px] text-[#333] tracking-[2px]">
+                  <span>REPO NAME</span>
+                  <span className="text-right">STARS</span>
+                  <span className="text-right">FORKS</span>
+                  <span className="text-right">LANG</span>
                 </div>
 
-                <div className="max-h-[600px] overflow-y-auto custom-scrollbar">
+                <div className="max-h-[600px] overflow-y-auto">
                   {filteredRepos?.length > 0 ? (
                     filteredRepos.map((repo, idx) => (
-                      <div key={idx} className="grid grid-cols-[1.2fr_70px_60px_1fr] md:grid-cols-[1fr_100px_100px_140px] px-4 py-4 border-b border-zinc-900/30 last:border-0 hover:bg-zinc-800/5 transition-colors items-center">
-                        <span className="flex items-center gap-2 text-left min-w-0">
-                          {repo.fork && <span style={{ color: userColor }} className="text-[10px] opacity-80 shrink-0">-</span>}
-                          <div className="truncate flex-1">
-                            <GlowText size="12px" color={userColor}>{repo.name}</GlowText>
-                          </div>
+                      <div
+                        key={idx}
+                        className="grid grid-cols-[1fr_80px_80px_80px] px-4 py-2.5 text-[12px] border-t border-[#080808] transition-colors duration-200 cursor-default"
+                        onMouseEnter={(e) =>
+                          (e.currentTarget.style.background = `${userColor}06`)
+                        }
+                        onMouseLeave={(e) =>
+                          (e.currentTarget.style.background = "transparent")
+                        }
+                      >
+                        <span
+                          className="overflow-hidden text-ellipsis whitespace-nowrap"
+                          style={{ color: userColor }}
+                        >
+                          {repo.fork && (
+                            <span className="mr-1.5 text-[#333]">⑂</span>
+                          )}
+                          {repo.name}
                         </span>
-                        <span className="flex items-center justify-center gap-1.5 font-mono text-[11px] md:text-[13px]">
-                           <span className={repo.stargazers_count > 0 ? 'text-amber-400' : 'text-zinc-800'}>{repo.stargazers_count > 0 ? '★' : '☆'}</span>
-                           <span className={repo.stargazers_count > 0 ? 'text-amber-400' : 'text-zinc-800'}>{repo.stargazers_count}</span>
+                        <span
+                          className={`text-right ${repo.stargazers_count > 0 ? "text-[#ffcc00]" : "text-[#222]"}`}
+                        >
+                          ★ {repo.stargazers_count}
                         </span>
-                        <span className="text-zinc-600 font-mono text-center">{repo.forks_count}</span>
-                        <span className="text-zinc-500 text-[10px] md:text-[12px] font-medium truncate uppercase text-right">
+                        <span className="text-right text-[#333]">
+                          {repo.forks_count}
+                        </span>
+                        <span className="text-right text-[#555] text-[10px]">
                           {repo.language || "—"}
                         </span>
                       </div>
                     ))
                   ) : (
-                    <div className="py-20 text-center text-zinc-800 text-[10px] uppercase">No_data_found</div>
+                    <div className="py-20 text-center text-zinc-800 text-[10px] uppercase">
+                      No_data_found
+                    </div>
                   )}
                 </div>
               </div>

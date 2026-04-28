@@ -22,7 +22,7 @@ function SearchBar({ onFetch, compareMode, loading }) {
 
   return (
     <div
-      className={`grid gap-4 mb-5 p-5 gird-col-1 ${compareMode ? "md:grid-cols-2" : ""}`}
+      className={`grid gap-4 mb-5 gird-col-1 ${compareMode ? "md:grid-cols-2" : ""}`}
     >
       {rows.map((idx) => {
         const color = idx === 0 ? ACCENT : ACCENT2;
@@ -32,22 +32,25 @@ function SearchBar({ onFetch, compareMode, loading }) {
         return (
           <div key={idx} className="flex">
             <div
-              className="px-3 py-2 bg-black border border-opacity-20 boder-r-0 rounded-l flex items-center"
-              style={{ borderColor: `${color}40` }}
+              className="px-3 py-2 bg-[#080808]  rounded-l flex items-center"
+              style={{ border: `1px solid ${color}25` }}
             >
-              <span className="text-xs font-bold" style={{ color }}>
+              <span className="text-xs " style={{ color }}>
                 {idx === 0 ? "USER_1 $" : "USER_2 $"}
               </span>
             </div>
 
             <input
               type="text"
-              placeholder="Enter UserName"
+              placeholder="github username..."
               value={value}
               onChange={(e) => setValue(e.target.value)}
               onKeyDown={(e) => handleKeyDown(e, idx)}
-              className="flex-1 bg-black border border-r-0 px-4 py-2 text-gray-200 text-sm outline-none font-mono"
-              style={{ borderColor: `${color}40` }}
+              className="flex-1 bg-[#080808]  px-4 py-1 text-gray-200 text-xs outline-none font-mono"
+              style={{
+                border: `1px solid ${color}25`,
+                fontFamily: "'Share Tech Mono', monospace",
+              }}
             />
             <button
               onClick={() => handleClick(idx)}

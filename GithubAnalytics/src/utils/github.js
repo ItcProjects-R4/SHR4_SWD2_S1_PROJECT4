@@ -16,8 +16,11 @@ export async function fetchGithubUser(username) {
     };
   } catch (error) {
     if (error.response?.status === 404) throw new Error("User not found");
-    if (error.response?.status === 403) throw new Error("API Rate limit exceeded. Try again later.");
-    throw new Error(error.response?.data?.message || "Failed to fetch data from GitHub");
+    if (error.response?.status === 403)
+      throw new Error("API Rate limit exceeded. Try again later.");
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch data from GitHub",
+    );
   }
 }
 
@@ -33,7 +36,7 @@ export function analyzeRepos(repos) {
     totalForks += r.forks_count;
     topByStars.push({
       name: r.name.length > 14 ? r.name.slice(0, 12) + "…" : r.name,
-      full: r.name,
+      full_name: r.full_name,
       stars: r.stargazers_count,
     });
   });
