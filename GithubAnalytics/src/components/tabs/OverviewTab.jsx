@@ -12,52 +12,47 @@ import UserCard from "../UserCard";
 import { SectionTitle, CustomTooltip } from "../UI";
 
 export default function OverviewTab({ data = [] }) {
+  const activeData = data.filter(Boolean);
+  const dual = activeData.length > 1;
+
   return (
     <div
-      className={`grid grid-cols-1 ${
-        data.length === 2 ? "lg:grid-cols-2" : ""
-      } gap-8`}
+      className={`grid gap-6 ${dual ? "grid-cols-1 lg:grid-cols-2" : "grid-cols-1"}`}
     >
-      {data.filter(Boolean).map((d, i) => {
+      {activeData.map((d, i) => {
         const color = i === 0 ? ACCENT : ACCENT2;
         return (
           <div key={d.user.login} className="flex flex-col">
             <UserCard user={d.user} stats={d} color={color} />
-            <div className="mt-8">
-              <SectionTitle>TOP REPOS BY STARS</SectionTitle>
-              <div style={{ height: 180, marginTop: 16 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={d.topByStars}>
-                    <CartesianGrid
-                      strokeDasharray="3 3"
-                      stroke="#222"
-                      vertical={false}
-                    />
-                    <XAxis
-                      dataKey="name"
-                      tick={{ fill: "#555", fontSize: 10 }}
-                      tickLine={false}
-                      axisLine={{ stroke: "#333" }}
-                    />
-                    <YAxis
-                      tick={{ fill: "#555", fontSize: 10 }}
-                      tickLine={false}
-                      axisLine={false}
-                      width={30}
-                    />
-                    <Tooltip
-                      content={<CustomTooltip unit="Stars" />}
-                      cursor={{ fill: "#1a1a1a" }}
-                    />
-                    <Bar
-                      dataKey="stars"
-                      fill={color}
-                      radius={[2, 2, 0, 0]}
-                      maxBarSize={20}
-                    />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
+            <div className="mt-5">
+              <SectionTitle>Top Repos by Stars</SectionTitle>
+              <ResponsiveContainer width="100%" height={180}>
+                <BarChart data={d.topByStars} barSize={14}>
+                  <CartesianGrid stroke="#0d0d0d" vertical={false} />
+                  <XAxis
+                    dataKey="name"
+                    tick={{
+                      fill: "#333",
+                      fontSize: 9,
+                      fontFamily: "'Share Tech Mono', monospace",
+                    }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <YAxis
+                    tick={{ fill: "#333", fontSize: 9 }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Bar
+                    dataKey="stars"
+                    fill={color}
+                    opacity={0.8}
+                    radius={[2, 2, 0, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </div>
         );

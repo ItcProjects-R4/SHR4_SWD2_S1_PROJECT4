@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { ACCENT } from "../utils/constants";
 
 const TYPE_STYLES = {
-  cmd: { prefix: "> ", color: ACCENT },
+  cmd: { prefix: "> ", color: "#555" },
   success: { prefix: "", color: ACCENT },
   error: { prefix: "", color: "#ff4488" },
   info: { prefix: "", color: "#555" },
@@ -19,7 +19,7 @@ export default function Terminal({ logs = [] }) {
     <div
       className="rounded-md px-4 py-5 overflow-y-auto text-[0.72rem] leading-relaxed"
       style={{
-        background: "#0a0a0a",
+        background: "#050505",
         border: "1px solid #1a1a1a",
         maxHeight: "120px",
         fontFamily: "'Share Tech Mono', monospace",

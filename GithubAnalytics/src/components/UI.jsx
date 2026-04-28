@@ -1,13 +1,20 @@
 import { ACCENT, ACCENT2 } from "../utils/constants";
 
 // ─── GlowText ───────────────────────────────────────────────────────────────
-export function GlowText({ color = ACCENT, size = "1rem", children }) {
+export function GlowText({
+  color = ACCENT,
+  size = "1rem",
+  style = {},
+  children,
+}) {
   return (
     <span
       style={{
         color,
         fontSize: size,
-        textShadow: `0 0 8px ${color}, 0 0 16px ${color}`,
+        fontFamily: "'Share Tech Mono', monospace",
+        textShadow: `0 0 8px ${color}80, 0 0 20px ${color}40`,
+        ...style,
       }}
     >
       {children}
