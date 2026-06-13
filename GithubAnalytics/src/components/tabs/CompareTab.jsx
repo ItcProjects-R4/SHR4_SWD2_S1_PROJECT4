@@ -2,7 +2,8 @@ import { ACCENT, ACCENT2 } from "../../utils/constants";
 import { computeRadar } from "../../utils/github";
 import { SectionTitle } from "../UI";
 import HeadToHead from "../HeadToHead";
-import StarsCompareChart from "../StarsCompareChart";
+import RecentActivityChart from "../RecentActivityChart";
+import RepoSizeChart from "../RepoSizeChart";
 
 export default function CompareTab({ data }) {
   const [d0, d1] = data;
@@ -24,21 +25,6 @@ export default function CompareTab({ data }) {
   const winner = s0 > s1 ? d0.user.login : s1 > s0 ? d1.user.login : null;
   const winColor = s0 >= s1 ? ACCENT : ACCENT2;
 
-  const allNames = [
-    ...new Set([
-      ...d0.topByStars.slice(0, 5).map((r) => r.full_name),
-      ...d1.topByStars.slice(0, 5).map((r) => r.full_name),
-    ]),
-  ];
-
-  const compareBarData = allNames.map((name) => ({
-    name: name.split("/")[1] || name,
-    [d0.user.login]:
-      d0.repos.find((r) => r.full_name === name)?.stargazers_count || 0,
-    [d1.user.login]:
-      d1.repos.find((r) => r.full_name === name)?.stargazers_count || 0,
-  }));
-
   return (
     <div className="space-y-8">
       <SectionTitle>Head-to-Head Comparison</SectionTitle>
@@ -50,11 +36,8 @@ export default function CompareTab({ data }) {
         winner={winner}
         winColor={winColor}
       />
-      <StarsCompareChart
-        compareBarData={compareBarData}
-        login0={d0.user.login}
-        login1={d1.user.login}
-      />
+      <RecentActivityChart d0={d0} d1={d1} />
+      <RepoSizeChart d0={d0} d1={d1} />
     </div>
   );
 }

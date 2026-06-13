@@ -14,7 +14,7 @@ import { ACCENT } from "./utils/constants";
 const TABS = ["overview", "repos", "languages"];
 
 export default function App() {
-  const { userData, loading, logs, fetchUser } = useGithub();
+  const { userData, loading, logs, fetchUser, searchHistory } = useGithub();
   const [compareMode, setCompareMode] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
 
@@ -52,6 +52,7 @@ export default function App() {
           onFetch={fetchUser}
           compareMode={compareMode}
           loading={loading}
+          searchHistory={searchHistory}
         />
         <Terminal logs={logs} />
 

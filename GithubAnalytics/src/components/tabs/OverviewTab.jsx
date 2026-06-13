@@ -9,6 +9,7 @@ import {
 } from "recharts";
 import { ACCENT, ACCENT2 } from "../../utils/constants";
 import UserCard from "../UserCard";
+import AccountAgeScore from "../AccountAgeScore";
 import { SectionTitle, CustomTooltip } from "../UI";
 
 export default function OverviewTab({ data = [] }) {
@@ -24,6 +25,7 @@ export default function OverviewTab({ data = [] }) {
         return (
           <div key={d.user.login} className="flex flex-col">
             <UserCard user={d.user} stats={d} color={color} />
+            <AccountAgeScore user={d.user} color={color} />
             <div className="mt-5">
               <SectionTitle>Top Repos by Stars</SectionTitle>
               <ResponsiveContainer width="100%" height={180}>
